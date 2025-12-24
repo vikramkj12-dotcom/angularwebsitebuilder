@@ -71,14 +71,15 @@
   color: var(--muted);
 }
 
-.example-prompts mat-chip {
-  cursor: pointer;
-}
-
 .prompt-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.prompt-chip {
+  text-align: left;
+  white-space: normal;
 }
 
 .timeline-card {
