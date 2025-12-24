@@ -46,15 +46,15 @@
 
           <div class="example-prompts" *ngIf="steps.length === 0">
             <h4>Try an example prompt</h4>
-            <mat-chip-listbox aria-label="Example prompts">
+            <mat-chip-set aria-label="Example prompts">
               <mat-chip
                 *ngFor="let example of examplePrompts"
                 (click)="applyExample(example)"
-                selectable="false"
+                role="button"
               >
                 {{ example }}
               </mat-chip>
-            </mat-chip-listbox>
+            </mat-chip-set>
           </div>
 
           <mat-form-field class="prompt-field" appearance="outline">
