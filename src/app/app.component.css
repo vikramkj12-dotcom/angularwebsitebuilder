@@ -75,6 +75,12 @@
   cursor: pointer;
 }
 
+.prompt-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .timeline-card {
   flex: 1;
 }
