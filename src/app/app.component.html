@@ -1,0 +1,177 @@
+<div class="app-shell">
+  <mat-toolbar color="primary" class="top-bar">
+    <div class="title">
+      <mat-icon>auto_awesome</mat-icon>
+      <span>{{ title }}</span>
+    </div>
+    <span class="spacer"></span>
+    <div class="status">
+      <span class="status-label">Status:</span>
+      <span>{{ statusMessage }}</span>
+    </div>
+    <button
+      mat-flat-button
+      color="accent"
+      [disabled]="isBusy"
+      (click)="exportProject()"
+      aria-label="Export generated project as zip"
+    >
+      <mat-icon>download</mat-icon>
+      Export
+    </button>
+  </mat-toolbar>
+
+  <mat-progress-bar
+    *ngIf="isBusy"
+    mode="indeterminate"
+    class="progress-bar"
+  ></mat-progress-bar>
+
+  <div class="content">
+    <section class="left-panel">
+      <mat-card class="panel-card">
+        <mat-card-header>
+          <mat-card-title>AI Chat Builder</mat-card-title>
+          <mat-card-subtitle>Describe your changes and iterate.</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div *ngIf="crossOriginError" class="error-banner">
+            <mat-icon>error_outline</mat-icon>
+            <p>{{ crossOriginError }}</p>
+          </div>
+          <div *ngIf="errorMessage && !crossOriginError" class="error-banner">
+            <mat-icon>warning</mat-icon>
+            <p>{{ errorMessage }}</p>
+          </div>
+
+          <div class="example-prompts" *ngIf="steps.length === 0">
+            <h4>Try an example prompt</h4>
+            <mat-chip-listbox aria-label="Example prompts">
+              <mat-chip
+                *ngFor="let example of examplePrompts"
+                (click)="applyExample(example)"
+                selectable="false"
+              >
+                {{ example }}
+              </mat-chip>
+            </mat-chip-listbox>
+          </div>
+
+          <mat-form-field class="prompt-field" appearance="outline">
+            <mat-label>Describe your next change</mat-label>
+            <textarea
+              matInput
+              [(ngModel)]="prompt"
+              rows="4"
+              placeholder="e.g. Add a pricing section with three plans"
+            ></textarea>
+          </mat-form-field>
+          <div class="actions">
+            <button
+              mat-flat-button
+              color="primary"
+              (click)="sendPrompt()"
+              [disabled]="isBusy || !prompt.trim()"
+              aria-label="Send prompt to AI"
+            >
+              <mat-icon>send</mat-icon>
+              Send
+            </button>
+            <button
+              mat-stroked-button
+              color="primary"
+              (click)="undo()"
+              [disabled]="!canUndo || isBusy"
+              aria-label="Undo"
+            >
+              <mat-icon>undo</mat-icon>
+              Undo
+            </button>
+            <button
+              mat-stroked-button
+              color="primary"
+              (click)="redo()"
+              [disabled]="!canRedo || isBusy"
+              aria-label="Redo"
+            >
+              <mat-icon>redo</mat-icon>
+              Redo
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="panel-card timeline-card">
+        <mat-card-header>
+          <mat-card-title>Timeline</mat-card-title>
+          <mat-card-subtitle>Restore any step instantly.</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list class="timeline-list">
+            <mat-list-item
+              *ngFor="let step of steps; let i = index"
+              (click)="restoreToStep(i)"
+              [class.active]="i === stepIndex"
+              tabindex="0"
+              role="button"
+            >
+              <div matListItemTitle>
+                Step {{ i + 1 }} · {{ step.userPrompt }}
+              </div>
+              <div matListItemLine>
+                {{ step.createdAt | date: "short" }}
+              </div>
+            </mat-list-item>
+            <mat-list-item *ngIf="steps.length === 0">
+              <div matListItemTitle>No steps yet</div>
+              <div matListItemLine>Start by sending your first prompt.</div>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </section>
+
+    <section class="right-panel">
+      <mat-card class="panel-card preview-card">
+        <mat-card-header>
+          <mat-card-title>Live Preview</mat-card-title>
+          <mat-card-subtitle>Generated site served from WebContainer.</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="preview-actions">
+            <button
+              mat-stroked-button
+              color="primary"
+              (click)="refreshPreview()"
+              [disabled]="!previewSrc"
+              aria-label="Refresh preview"
+            >
+              <mat-icon>refresh</mat-icon>
+              Refresh
+            </button>
+            <button
+              mat-stroked-button
+              color="primary"
+              (click)="openPreview()"
+              [disabled]="!previewSrc"
+              aria-label="Open preview in new tab"
+            >
+              <mat-icon>open_in_new</mat-icon>
+              Open
+            </button>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="preview-frame" *ngIf="previewSafeUrl; else previewPlaceholder">
+            <iframe [src]="previewSafeUrl" title="Preview"></iframe>
+          </div>
+          <ng-template #previewPlaceholder>
+            <div class="preview-empty">
+              <mat-icon>visibility_off</mat-icon>
+              <p>Preview not ready yet.</p>
+            </div>
+          </ng-template>
+        </mat-card-content>
+      </mat-card>
+    </section>
+  </div>
+</div>
