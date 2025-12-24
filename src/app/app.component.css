@@ -97,6 +97,15 @@
   background: rgba(63, 81, 181, 0.12);
 }
 
+.timeline-title {
+  font-weight: 600;
+}
+
+.timeline-meta {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
 .preview-card {
   min-height: 600px;
 }

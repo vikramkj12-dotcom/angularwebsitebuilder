@@ -118,16 +118,12 @@
               tabindex="0"
               role="button"
             >
-              <div matListItemTitle>
-                Step {{ i + 1 }} · {{ step.userPrompt }}
-              </div>
-              <div matListItemLine>
-                {{ step.createdAt | date: "short" }}
-              </div>
+              <div class="timeline-title">Step {{ i + 1 }} · {{ step.userPrompt }}</div>
+              <div class="timeline-meta">{{ step.createdAt | date: "short" }}</div>
             </mat-list-item>
             <mat-list-item *ngIf="steps.length === 0">
-              <div matListItemTitle>No steps yet</div>
-              <div matListItemLine>Start by sending your first prompt.</div>
+              <div class="timeline-title">No steps yet</div>
+              <div class="timeline-meta">Start by sending your first prompt.</div>
             </mat-list-item>
           </mat-list>
         </mat-card-content>

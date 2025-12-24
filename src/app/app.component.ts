@@ -8,7 +8,6 @@ import { MatCardModule } from "@angular/material/card";
 import { MatInputModule } from "@angular/material/input";
 import { MatListModule } from "@angular/material/list";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
-import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatDividerModule } from "@angular/material/divider";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { WebcontainerService } from "./services/webcontainer.service";
@@ -28,7 +27,6 @@ import type { SitePlan, Step } from "./models";
     MatInputModule,
     MatListModule,
     MatProgressBarModule,
-    MatTooltipModule,
     MatDividerModule
   ],
   templateUrl: "./app.component.html",
