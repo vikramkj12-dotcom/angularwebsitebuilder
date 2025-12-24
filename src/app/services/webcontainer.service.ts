@@ -252,10 +252,15 @@ export class AppComponent {
       throw new Error("WebContainer not ready");
     }
     try {
-      await this.container.fs.stat(path);
+      await this.container.fs.readdir(path);
       return true;
     } catch {
-      return false;
+      try {
+        await this.container.fs.readFile(path, "utf-8");
+        return true;
+      } catch {
+        return false;
+      }
     }
   }
 
