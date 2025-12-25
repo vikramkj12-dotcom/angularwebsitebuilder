@@ -35,6 +35,7 @@ import type { SitePlan, Step } from "./models";
 export class AppComponent implements OnInit {
   title = "AI Angular Website Builder";
   prompt = "";
+  apiKey = "";
   steps: Step[] = [];
   stepIndex = -1;
   isBusy = false;
@@ -57,6 +58,10 @@ export class AppComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    const storedKey = localStorage.getItem("openaiApiKey");
+    if (storedKey) {
+      this.apiKey = storedKey;
+    }
     if (!self.crossOriginIsolated) {
       this.crossOriginError =
         "WebContainer requires crossOriginIsolated. " +
@@ -98,14 +103,24 @@ export class AppComponent implements OnInit {
     this.isBusy = true;
     this.errorMessage = null;
     try {
+      this.llm.setApiKey(this.apiKey);
       const response = await this.llm.generate(this.currentPlan, userPrompt);
-      await this.webcontainer.applyPatch(response.patch.changes);
+      const normalizedChanges = response.patch.changes.map((change) => ({
+        ...change,
+        path: change.path.startsWith("generated-site/")
+          ? change.path
+          : `generated-site/${change.path}`
+      }));
+      await this.webcontainer.applyPatch(normalizedChanges);
       const step: Step = {
         id: response.patch.id,
         createdAt: new Date().toISOString(),
         userPrompt,
         sitePlan: response.sitePlan,
-        patch: response.patch
+        patch: {
+          ...response.patch,
+          changes: normalizedChanges
+        }
       };
       this.steps = [...this.steps.slice(0, this.stepIndex + 1), step];
       this.stepIndex = this.steps.length - 1;
@@ -187,6 +202,14 @@ export class AppComponent implements OnInit {
 
   applyExample(prompt: string): void {
     this.prompt = prompt;
+  }
+
+  persistApiKey(): void {
+    if (this.apiKey.trim()) {
+      localStorage.setItem("openaiApiKey", this.apiKey.trim());
+    } else {
+      localStorage.removeItem("openaiApiKey");
+    }
   }
 
   private setPreviewUrl(url: string | null): void {

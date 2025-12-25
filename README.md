@@ -14,3 +14,4 @@ npm start
   - `Cross-Origin-Opener-Policy: same-origin`
   - `Cross-Origin-Embedder-Policy: require-corp`
 - Generated projects live inside the WebContainer filesystem under `generated-site/`.
+- To connect to OpenAI, paste your API key in the UI. It is stored locally in your browser.

@@ -65,9 +65,22 @@
             <textarea
               matInput
               [(ngModel)]="prompt"
+              (keydown.control.enter)="sendPrompt()"
+              (keydown.meta.enter)="sendPrompt()"
               rows="4"
               placeholder="e.g. Add a pricing section with three plans"
             ></textarea>
+          </mat-form-field>
+          <mat-form-field class="prompt-field" appearance="outline">
+            <mat-label>OpenAI API key</mat-label>
+            <input
+              matInput
+              [(ngModel)]="apiKey"
+              (blur)="persistApiKey()"
+              placeholder="sk-..."
+              type="password"
+            />
+            <mat-hint>Stored locally in your browser.</mat-hint>
           </mat-form-field>
           <div class="actions">
             <button
