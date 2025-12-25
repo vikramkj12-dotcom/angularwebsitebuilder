@@ -10,5 +10,7 @@ npm start
 ```
 
 ## Notes
-- The app requires `crossOriginIsolated` to be `true` to boot WebContainer. Make sure COOP/COEP headers are enabled in your hosting environment.
+- The app requires `crossOriginIsolated` to be `true` to boot WebContainer. Make sure COOP/COEP headers are enabled in your hosting environment:
+  - `Cross-Origin-Opener-Policy: same-origin`
+  - `Cross-Origin-Embedder-Policy: require-corp`
 - Generated projects live inside the WebContainer filesystem under `generated-site/`.

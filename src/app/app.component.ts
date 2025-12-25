@@ -59,8 +59,9 @@ export class AppComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     if (!self.crossOriginIsolated) {
       this.crossOriginError =
-        "This app requires crossOriginIsolated to run WebContainer. " +
-        "Enable COOP/COEP headers or use a compatible hosting environment.";
+        "WebContainer requires crossOriginIsolated. " +
+        "Serve this app with COOP/COEP headers (Cross-Origin-Opener-Policy: same-origin " +
+        "and Cross-Origin-Embedder-Policy: require-corp) or use a compatible host.";
       this.statusMessage = "Cross-origin isolation required.";
       return;
     }
