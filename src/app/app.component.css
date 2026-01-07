@@ -1,0 +1,153 @@
+.top-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-right: 16px;
+}
+
+.status-label {
+  font-weight: 600;
+}
+
+.progress-bar {
+  height: 4px;
+}
+
+.content {
+  flex: 1;
+}
+
+.panel-card {
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: 0 10px 30px rgba(18, 32, 66, 0.08);
+}
+
+.left-panel,
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel-card mat-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.prompt-field textarea {
+  resize: vertical;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.example-prompts h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.prompt-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.prompt-chip {
+  text-align: left;
+  white-space: normal;
+}
+
+.timeline-card {
+  flex: 1;
+}
+
+.timeline-list mat-list-item {
+  border-radius: 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.timeline-list mat-list-item.active {
+  background: rgba(63, 81, 181, 0.12);
+}
+
+.timeline-title {
+  font-weight: 600;
+}
+
+.timeline-meta {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.preview-card {
+  min-height: 600px;
+}
+
+.preview-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.preview-frame {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  height: 520px;
+}
+
+.preview-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.preview-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 48px;
+  color: var(--muted);
+}
+
+.error-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(244, 67, 54, 0.1);
+  color: #b71c1c;
+}
+
+.error-banner mat-icon {
+  margin-top: 2px;
+}
